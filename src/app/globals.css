@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "Inter", system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: #ffffff;
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  
+  * {
+    border-color: #e2e8f0;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    padding: 0.75rem 1.5rem;
+    background-color: #22c55e;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    transition: all 0.3s;
+    outline: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #16a34a;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+    transform: scale(1.05);
+  }
+  
+  .btn-secondary {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #22c55e;
+    color: #22c55e;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    transition: all 0.3s;
+    outline: none;
+    background: transparent;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #22c55e;
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+    transform: scale(1.05);
+  }
+  
+  .card {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07);
+    transition: all 0.3s;
+    border: 1px solid #f1f5f9;
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .section-padding {
+    padding: 5rem 1.5rem;
+  }
+  
+  .container-custom {
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+  
+  .text-gradient {
+    background: linear-gradient(to right, #22c55e, #15803d);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .animation-hover {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .animation-hover:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #22c55e;
+    transition: all 0.3s ease-out;
+  }
+  
+  .animation-hover:hover:after,
+  .animation-active:after {
+    left: 0;
+    width: 100%;
+  }
+  
+  .glass-effect {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #22c55e transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #22c55e;
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: #16a34a;
+  }
+}
+/* Custom project styles */
+.project-wrapper {
+  display: flex;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #22c55e transparent;
+  height: 400px;
+  padding: 20px 0;
+  gap: 24px;
+}
+
+.project-wrapper li {
+  flex: 0 0 320px;
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: #22c55e;
+  z-index: 50;
+  transform-origin: 0%;
+}
+
+/* MUI Timeline overrides */
+.MuiTimelineItem-root::before {
+  flex: 0 !important;
+}
+
+.MuiTimelineDot-root {
+  background-color: #22c55e !important;
+}
+
+.MuiTimelineConnector-root {
+  background-color: #22c55e !important;
+}
+
+/* Loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+
+
+
+
