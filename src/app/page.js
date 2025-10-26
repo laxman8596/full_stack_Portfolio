@@ -24,7 +24,7 @@ const SectionSkeleton = () => (
 async function extractAllDatas(currentSection) {
   try {
     const baseUrl = process.env.NODE_ENV === 'production' 
-      ? process.env.NEXT_PUBLIC_BASE_URL || 'https://your-domain.com'
+      ? process.env.NEXT_PUBLIC_BASE_URL
       : 'http://localhost:3000';
       
     const res = await fetch(`${baseUrl}/api/${currentSection}/get`, {
