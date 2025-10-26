@@ -30,7 +30,6 @@ async function extractAllDatas(currentSection) {
     const res = await fetch(`${baseUrl}/api/${currentSection}/get`, {
       method: "GET",
       cache: "no-store",
-      next: { revalidate: 0 },
       headers: {
         'Content-Type': 'application/json',
       },
