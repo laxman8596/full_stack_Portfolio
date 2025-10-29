@@ -3,7 +3,8 @@
 import { useRef, useState } from "react";
 import AnimationWrapper, { staggerVariants } from "../animation-wrapper";
 import { motion, useScroll } from "framer-motion";
-import { HiExternalLink, HiCode, HiCalendar, HiEye } from "react-icons/hi";
+import { HiExternalLink, HiCode, HiCalendar, HiEye, HiGlobe } from "react-icons/hi";
+import { FaGithub } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 const projectVariants = {
@@ -83,28 +84,32 @@ const ProjectCard = ({ project, index }) => {
             )}
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-            <motion.button
-              onClick={() => project?.website && router.push(project.website)}
-              className="flex-1 btn-primary flex items-center justify-center gap-2 text-xs sm:text-sm py-2 sm:py-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              disabled={!project?.website}
-            >
-              <HiExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
-              Live Demo
-            </motion.button>
-            <motion.button
-              onClick={() => project?.github && router.push(project.github)}
-              className="flex-1 btn-secondary flex items-center justify-center gap-2 text-xs sm:text-sm py-2 sm:py-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              disabled={!project?.github}
-            >
-              <HiCode className="w-3 h-3 sm:w-4 sm:h-4" />
-              Code
-            </motion.button>
+          {/* Action Links */}
+          <div className="flex gap-3">
+            {project?.website && (
+              <a 
+                href={project.website} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 transition-colors"
+              >
+                <HiGlobe className="w-4 h-4" />
+                Live Demo
+                <HiExternalLink className="w-3 h-3" />
+              </a>
+            )}
+            {project?.github && (
+              <a 
+                href={project.github} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-sm text-gray-700 hover:text-gray-900 transition-colors"
+              >
+                <FaGithub className="w-4 h-4" />
+                Code
+                <HiExternalLink className="w-3 h-3" />
+              </a>
+            )}
           </div>
         </div>
 

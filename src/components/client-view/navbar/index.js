@@ -147,7 +147,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute right-0 top-0 h-full w-80 bg-white shadow-strong p-6 pt-20"
+              className="absolute right-0 top-0 h-full w-80 bg-secondary shadow-strong p-6 pt-20"
             >
               <div className="flex flex-col space-y-2">
                 <CreateMenus

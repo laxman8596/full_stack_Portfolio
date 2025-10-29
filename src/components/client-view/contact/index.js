@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import AnimationWrapper from "../animation-wrapper";
 import { motion } from "framer-motion";
-import { HiMail, HiPhone, HiLocationMarker, HiCheckCircle, HiPaperAirplane } from "react-icons/hi";
+import { HiMail, HiPhone, HiLocationMarker, HiCheckCircle, HiPaperAirplane, HiExternalLink } from "react-icons/hi";
 import { addData } from "@/services";
 import toast from 'react-hot-toast';
 
@@ -13,21 +13,18 @@ const controls = [
     placeholder: "Your full name",
     type: "text",
     label: "Full Name",
-    icon: "👤",
   },
   {
     name: "email",
     placeholder: "your.email@example.com",
     type: "email",
     label: "Email Address",
-    icon: "📧",
   },
   {
     name: "message",
     placeholder: "Tell me about your project or just say hello...",
     type: "textarea",
     label: "Message",
-    icon: "💬",
   },
 ];
 
@@ -35,8 +32,8 @@ const contactInfo = [
   {
     icon: HiMail,
     label: "Email",
-    value: "annabpinalaxman6@gmail.com",
-    href: "mailto:annabpinalaxman6@gmail.com",
+    value: "annaboinalaxman6@gmail.com",
+    href: "mailto:annaboinalaxman6@gmail.com",
   },
   {
     icon: HiPhone,
@@ -97,17 +94,25 @@ export default function ClientContactView() {
         body: JSON.stringify(formData)
       });
       
+      const emailResult = await emailRes.json().catch(() => ({}));
+      console.log('Email API Response:', emailResult);
+      
       // Save to database
       const dbRes = await addData("contact", formData);
+      console.log('Database Response:', dbRes);
       
-      if (emailRes.ok || (dbRes && dbRes.success)) {
+      if (emailRes.ok && emailResult.success) {
         setFormData(initialFormData);
         setErrors({});
         toast.success('Message sent successfully!');
+      } else if (dbRes && dbRes.success) {
+        setFormData(initialFormData);
+        setErrors({});
+        toast.success('Message saved! Email delivery may have failed.');
+        console.error('Email failed but DB saved:', emailResult);
       } else {
-        const emailError = await emailRes.json().catch(() => ({}));
-        console.error('Email API error:', emailError);
-        toast.error(emailError.message || 'Failed to send message. Please try again.');
+        console.error('Both email and DB failed:', { emailResult, dbRes });
+        toast.error(emailResult.message || 'Failed to send message. Please try again.');
       }
     } catch (error) {
       console.error("Error sending message:", error);
@@ -182,9 +187,12 @@ export default function ClientContactView() {
                       <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
                         <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                       </div>
-                      <div className="min-w-0">
-                        <p className="text-secondary-400 text-xs sm:text-sm">{info.label}</p>
-                        <p className="text-white font-medium text-sm sm:text-base break-words">{info.value}</p>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-secondary-400 group-hover:text-white group-hover:font-bold text-xs sm:text-sm transition-all">{info.label}</p>
+                        <p className="text-secondary-300 group-hover:!text-white group-hover:font-bold font-medium text-sm sm:text-base break-words transition-all">{info.value}</p>
+                      </div>
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <HiExternalLink className="w-4 h-4 text-primary-500" />
                       </div>
                     </motion.a>
                   );
@@ -212,7 +220,7 @@ export default function ClientContactView() {
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                   >
                     <label className="block text-sm font-medium text-secondary-300 mb-2">
-                      {control.icon} {control.label}
+                      {control.label}
                     </label>
                     {control.type === "textarea" ? (
                       <textarea

@@ -4,18 +4,32 @@ import nodemailer from "nodemailer";
 export async function POST(request) {
   try {
     const { name, email, message } = await request.json();
+    
+    console.log('Email API called with:', { name, email: email?.substring(0, 5) + '...', messageLength: message?.length });
+    console.log('SMTP Config:', { 
+      user: process.env.SMTP_USER ? 'Set' : 'Missing',
+      pass: process.env.SMTP_PASS ? 'Set' : 'Missing',
+      userValue: process.env.SMTP_USER,
+      passLength: process.env.SMTP_PASS?.length
+    });
 
-    const transporter = nodemailer.createTransporter({
-      service: 'gmail',
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
       auth: {
-        user: process.env.SMTP_USER || 'your-email@gmail.com',
-        pass: process.env.SMTP_PASS || 'your-app-password'
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+      },
+      tls: {
+        rejectUnauthorized: false
       }
     });
 
     const mailOptions = {
-      from: email,
+      from: process.env.SMTP_USER,
       to: 'annaboinalaxman6@gmail.com',
+      replyTo: email,
       subject: `Portfolio Contact: ${name}`,
       html: `
         <h3>New Contact Form Submission</h3>
@@ -26,7 +40,9 @@ export async function POST(request) {
       `
     };
 
-    await transporter.sendMail(mailOptions);
+    console.log('Attempting to send email...');
+    const result = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', result.messageId);
 
     return NextResponse.json({
       success: true,
@@ -34,10 +50,14 @@ export async function POST(request) {
     });
 
   } catch (error) {
-    console.error('Email error:', error);
+    console.error('Email error details:', {
+      message: error.message,
+      code: error.code,
+      command: error.command
+    });
     return NextResponse.json({
       success: false,
-      message: "Failed to send email"
+      message: `Email failed: ${error.message}`
     }, { status: 500 });
   }
 }

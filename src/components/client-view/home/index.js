@@ -121,7 +121,7 @@ export default function ClientHomeView({ data }) {
               >
                 <motion.a
                   href="/cv/Laxman-Resume.pdf"
-                  download="Laxman-CV.pdf"
+                  download="Laxman-Resume.pdf"
                   className="btn-primary flex items-center gap-2 no-underline"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

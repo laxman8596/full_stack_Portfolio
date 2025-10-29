@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Navbar from '../navbar';
+import { Toaster } from 'react-hot-toast';
 
 const LoadingScreen = () => (
   <motion.div
@@ -80,8 +81,16 @@ export default function CommonLayout({ children }) {
           <ScrollProgress />
           {pathName !== '/admin' && <Navbar />}
           <main className="relative">{children}</main>
-
-          
+          <Toaster 
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: '#363636',
+                color: '#fff',
+              },
+            }}
+          />
         </motion.div>
       )}
     </>
